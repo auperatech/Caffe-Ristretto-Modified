@@ -32,7 +32,7 @@ void SaturationLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
     Dtype* bottom_diff = bottom[0]->mutable_cpu_diff();
     const int count = bottom[0]->count();
     for (int i = 0; i < count; ++i) {
-      if((-saturation_) <= bottom_data[i] <= saturation_){
+      if(bottom_data[i] >= (-saturation_) && bottom_data[i] <= saturation_){
           bottom_diff[i] = top_diff[i];
       }
       else{
