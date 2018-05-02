@@ -21,6 +21,33 @@ message BlobProto {
   optional int32 width = 4 [default = 0];
 }
 
+
+message quantization_param {
+  optional string precision = 1;
+  optional int32 bw_layer_in = 2;
+  optional int32 bw_layer_out = 3;
+  optional int32 bw_params = 4;
+  optional int32 bw_bias = 5;
+  optional int32 fl_layer_in = 6;
+  optional int32 fl_layer_out = 7;
+  optional int32 fl_params = 8;
+  optional int32 fl_bias = 9;
+  optional int32 batchnorm_mean_fl = 10;
+  optional int32 batchnorm_variance_fl = 11;
+  optional int32 batchnorm_mean_bw = 12;
+  optional int32 batchnorm_variance_bw = 13;
+  optional int32 scale_gamma_fl = 14;
+  optional int32 scale_beta_fl = 15;
+  optional int32 scale_gamma_bw = 16;
+  optional int32 scale_beta_bw = 17;
+  optional int32 scale_gamma_by_std_bw = 18;
+  optional int32 scale_gamma_by_std_fl = 19;
+}
+
+message SaturationParam {
+  optional float saturation = 1;
+}
+
 // The BlobProtoVector is simply a way to pass multiple blobproto instances
 // around.
 message BlobProtoVector {
@@ -322,7 +349,7 @@ message ParamSpec {
 // NOTE
 // Update the next available ID when you add a new LayerParameter field.
 //
-// LayerParameter next available layer-specific ID: 148 (last added: swish_param)
+// LayerParameter next available layer-specific ID: 147 (last added: recurrent_param)
 message LayerParameter {
   optional string name = 1; // the layer name
   optional string type = 2; // the layer type
@@ -420,6 +447,8 @@ message LayerParameter {
   optional ThresholdParameter threshold_param = 128;
   optional TileParameter tile_param = 138;
   optional WindowDataParameter window_data_param = 129;
+  optional quantization_param quantization_param = 148;
+  optional SaturationParam saturation_param = 149;
 }
 
 // Message that stores parameters used to apply transformation
@@ -443,6 +472,15 @@ message TransformationParameter {
   optional bool force_color = 6 [default = false];
   // Force the decoded image to have 1 color channels.
   optional bool force_gray = 7 [default = false];
+}
+
+// Message that stores parameters used by SwishLayer		
+message SwishParameter {
+  // Beta parameter for the Swish activation function
+  // Described in:
+  // Prajit Ramachandran, Barret Zoph, Quoc V. Le. (2017). Searching for
+  // Activation Functions. https://arxiv.org/abs/1710.05941v2
+  optional float beta = 1 [default = 1];
 }
 
 // Message that stores parameters shared by loss layers
@@ -1155,15 +1193,6 @@ message SoftmaxParameter {
   // from the end (e.g., -1 for the last axis).
   // Any other axes will be evaluated as independent softmaxes.
   optional int32 axis = 2 [default = 1];
-}
-
-// Message that stores parameters used by SwishLayer
-message SwishParameter {
-  // Beta parameter for the Swish activation function
-  // Described in:
-  // Prajit Ramachandran, Barret Zoph, Quoc V. Le. (2017). Searching for
-  // Activation Functions. https://arxiv.org/abs/1710.05941v2
-  optional float beta = 1 [default = 1];
 }
 
 message TanHParameter {
