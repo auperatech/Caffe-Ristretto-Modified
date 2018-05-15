@@ -35,11 +35,11 @@ template <typename Dtype>
 __global__ void SaturationBackward(const int n, const Dtype* in_diff,
     const Dtype* in_data, Dtype* out_diff, Dtype saturation) {
   CUDA_KERNEL_LOOP(index, n) {
-    if(in_data[i] >= (-saturation) && in_data[i] <= saturation){
-        out_diff[i] = in_diff[i];
+    if(in_data[index] >= (-saturation) && in_data[index] <= saturation){
+        out_diff[index] = in_diff[index];
     }
     else{
-        out_diff[i] = 0;
+        out_diff[index] = 0;
     }
   }
 }

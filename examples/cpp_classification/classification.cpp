@@ -10,7 +10,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-
+#define USE_OPENCV
 #ifdef USE_OPENCV
 using namespace caffe;  // NOLINT(build/namespaces)
 using std::string;
