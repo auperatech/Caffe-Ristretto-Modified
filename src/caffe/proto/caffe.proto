@@ -21,29 +21,6 @@ message BlobProto {
   optional int32 width = 4 [default = 0];
 }
 
-
-message quantization_param {
-  optional string precision = 1;
-  optional int32 bw_layer_in = 2;
-  optional int32 bw_layer_out = 3;
-  optional int32 bw_params = 4;
-  optional int32 bw_bias = 5;
-  optional int32 fl_layer_in = 6;
-  optional int32 fl_layer_out = 7;
-  optional int32 fl_params = 8;
-  optional int32 fl_bias = 9;
-  optional int32 batchnorm_mean_fl = 10;
-  optional int32 batchnorm_variance_fl = 11;
-  optional int32 batchnorm_mean_bw = 12;
-  optional int32 batchnorm_variance_bw = 13;
-  optional int32 scale_gamma_fl = 14;
-  optional int32 scale_beta_fl = 15;
-  optional int32 scale_gamma_bw = 16;
-  optional int32 scale_beta_bw = 17;
-  optional int32 scale_gamma_by_std_bw = 18;
-  optional int32 scale_gamma_by_std_fl = 19;
-}
-
 message SaturationParam {
   optional float saturation = 1;
 }
@@ -449,7 +426,6 @@ message LayerParameter {
   optional ThresholdParameter threshold_param = 128;
   optional TileParameter tile_param = 138;
   optional WindowDataParameter window_data_param = 129;
-  optional quantization_param quantization_param = 148;
   optional SaturationParam saturation_param = 149;
 }
 
@@ -467,18 +443,30 @@ message QuantizationParameter{
   }
   optional Rounding rounding_scheme = 2 [default = NEAREST];
   // Dynamic fixed point word width
-  optional uint32 bw_layer_in = 3 [default = 32];
-  optional uint32 bw_layer_out = 4 [default = 32];
-  optional uint32 bw_params = 5 [default = 32];
-  optional int32 fl_layer_in = 6 [default = 16];
-  optional int32 fl_layer_out = 7 [default = 16];
-  optional int32 fl_params = 8 [default = 16];
+  optional int32 bw_layer_in = 24;
+  optional int32 bw_layer_out = 3;
+  optional int32 bw_params = 4;
+  optional int32 bw_bias = 5;
+  optional int32 fl_layer_in = 6;
+  optional int32 fl_layer_out = 7;
+  optional int32 fl_params = 8;
+  optional int32 fl_bias = 9;
+  optional int32 batchnorm_mean_fl = 10;
+  optional int32 batchnorm_variance_fl = 11;
+  optional int32 batchnorm_mean_bw = 12;
+  optional int32 batchnorm_variance_bw = 13;
+  optional int32 scale_gamma_fl = 14;
+  optional int32 scale_beta_fl = 15;
+  optional int32 scale_gamma_bw = 16;
+  optional int32 scale_beta_bw = 17;
+  optional int32 scale_gamma_by_std_bw = 18;
+  optional int32 scale_gamma_by_std_fl = 19;
   // Minifloat word width
-  optional uint32 mant_bits = 9 [default = 23];
-  optional uint32 exp_bits = 10 [default = 8];
+  optional uint32 mant_bits = 20 [default = 23];
+  optional uint32 exp_bits = 21 [default = 8];
   // Integer-power-of-two weights
-  optional int32 exp_min = 11 [default = -8];
-  optional int32 exp_max = 12 [default = -1];
+  optional int32 exp_min = 22 [default = -8];
+  optional int32 exp_max = 23 [default = -1];
 }
 
 // Message that stores parameters used to apply transformation
