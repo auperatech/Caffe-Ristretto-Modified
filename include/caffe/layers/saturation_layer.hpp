@@ -20,6 +20,10 @@ class SaturationLayer : public NeuronLayer<Dtype> {
       virtual inline const char* type() const { return "Saturation"; }
  protected:
     Dtype saturation_;
+    Dtype pow_minus_fl;
+    Dtype max_data;
+    Dtype min_data;
+
   virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
   virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
