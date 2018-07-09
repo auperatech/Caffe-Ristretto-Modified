@@ -30,6 +30,7 @@ void BaseRistrettoLayer<Dtype>::QuantizeWeights_cpu(
   case QuantizationParameter_Precision_DYNAMIC_FIXED_POINT:
     Trim2FixedPoint_cpu(weight, cnt_weight, bw_params_, rounding, fl_params_);
     if (bias_term) {
+        // Bias in CHaiDNN is quantized with the same precision as the the layer inputs
       Trim2FixedPoint_cpu(weights_quantized[1]->mutable_cpu_data(),
           weights_quantized[1]->count(), bw_layer_in_, rounding, fl_layer_in_);
     }
